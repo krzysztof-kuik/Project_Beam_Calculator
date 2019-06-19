@@ -20,19 +20,22 @@ class Form extends Component {
     this.setState({
       [e.target.name]: e.target.value
     })
+
+    this.props.getState(e);
   }
 
   render() {
-
+    console.log(this.props);
     let forceForms = [];
     for (let i = 1; i <= this.state.numOfForces; i++) {
+      let minXValue = i >= 2 ? parseInt(this.state[`force_${i - 1}_X`]) + 1 : 0;
       forceForms.push(
         <div>
           <label> Please specify value of Force Number {i}
             <input onChange={this.numInputHandler} name={`force_${i}_Value`} type="number" value={this.state[`force_${i}_Value`]} />
           </label>
           <label> Please specify x coordinate of Force Number {i}
-            <input onChange={this.numInputHandler} name={`force_${i}_X`} type="number" value={this.state[`force_${i}_X`]} />
+            <input onChange={this.numInputHandler} name={`force_${i}_X`} type="number" value={this.state[`force_${i}_X`]} min={minXValue} />
           </label>
         </div>
       )

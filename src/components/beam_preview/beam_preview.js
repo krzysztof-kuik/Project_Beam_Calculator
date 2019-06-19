@@ -1,10 +1,13 @@
 import React, { Component } from 'react'
+import './beam_preview.scss';
+
 
 class BeamPreview extends Component {
     render() {
         return (
             <div className="beamPreview">
-                hello im beamPreview
+                BEAM PREVIEW
+                <div className="beamPreview__beam"></div>
             </div>
         )
     }
