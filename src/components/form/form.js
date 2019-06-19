@@ -29,10 +29,10 @@ class Form extends Component {
       forceForms.push(
         <div>
           <label> Please specify value of Force Number {i}
-            <input onChange={this.numInputHandler} name={`force_${i}_Value`} type="number" />
+            <input onChange={this.numInputHandler} name={`force_${i}_Value`} type="number" value={this.state[`force_${i}_Value`]} />
           </label>
           <label> Please specify x coordinate of Force Number {i}
-            <input onChange={this.numInputHandler} name={`force_${i}_X`} type="number" />
+            <input onChange={this.numInputHandler} name={`force_${i}_X`} type="number" value={this.state[`force_${i}_X`]} />
           </label>
         </div>
       )
