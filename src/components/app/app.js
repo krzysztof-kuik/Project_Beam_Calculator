@@ -12,10 +12,24 @@ class App extends Component {
   }
 
   getState = (data) => {
-    const target = data.target;
-    this.setState({
-      [target.name]: target.value
-    })
+    console.log(data);
+
+    for (let i = 0; i < Object.keys(data).length; i++) {
+      let key = Object.keys(data)[i];
+      let value = data[key];
+      this.setState({
+        [key]: value
+      })
+    }
+
+    // let newState = data
+    // this.setState({
+    //   newState
+    // })
+    // const target = data.target;
+    // this.setState({
+    //   [target.name]: target.value
+    // })
   }
 
   render() {
