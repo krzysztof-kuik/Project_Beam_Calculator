@@ -7,8 +7,8 @@
     border-top: ($height/3) solid $color;
     position: absolute;
     bottom: 0;
-    transform: translateX(-50%);
-    left: 0;
+    transform: translateX(50%);
+    right: 0;
 
     &:after {
         content: '';

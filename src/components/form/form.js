@@ -22,17 +22,23 @@ class Form extends Component {
   }
 
   numInputHandler = (e, i) => {
+    let nMinusOneEl = parseInt(this.state[`force_${i - 1}_X`])
     let nEl = parseInt(this.state[`force_${i}_X`]);
     let nPlusOneEl = parseInt(this.state[`force_${i + 1}_X`]);
 
     if (nPlusOneEl - nEl <= 0) {
+      console.log("war 1");
 
       this.setState({
         [e.target.name]: parseInt(e.target.value),
-        [`force_${i + 1}_X`]: parseInt(e.target.value) + 1,
+        [`force_${i + 1}_X`]: parseInt(e.target.value),
       }, () => { this.props.getState(this.state) })
+
     }
+
     else {
+      console.log("war 2");
+
       this.setState({
         [e.target.name]: parseInt(e.target.value),
       }, () => { this.props.getState(this.state) })
@@ -47,6 +53,9 @@ class Form extends Component {
 
       let minXValue = i >= 2 ? parseInt(this.state[`force_${i - 1}_X`]) + 1 : 0;
 
+      let maxValue = this.state.beamLength;
+      let xCoordValue = this.state[`force_${i}_X`] <= maxValue ? this.state[`force_${i}_X`] : maxValue;
+
       forceForms.push(
 
         <div>
@@ -55,7 +64,7 @@ class Form extends Component {
           </label>
 
           <label> Please specify x coordinate of Force Number {i}
-            <input onChange={e => this.numInputHandler(e, i)} name={`force_${i}_X`} type="number" value={this.state[`force_${i}_X`]} min={minXValue} />
+            <input onChange={e => this.numInputHandler(e, i)} name={`force_${i}_X`} type="number" value={xCoordValue} min={minXValue} max={this.state.beamLength} />
           </label>
         </div>
       )
@@ -78,7 +87,7 @@ class Form extends Component {
                     </label>
         </div>
 
-        {this.state.numOfForces > 0 &&
+        {(this.state.numOfForces > 0 && this.state.beamLength > 0) &&
           forceForms
         }
 

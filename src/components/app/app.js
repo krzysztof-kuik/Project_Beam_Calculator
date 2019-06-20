@@ -12,7 +12,7 @@ class App extends Component {
   }
 
   getState = (data) => {
-    console.log(data);
+    // console.log(data);
 
     for (let i = 0; i < Object.keys(data).length; i++) {
       let key = Object.keys(data)[i];
@@ -30,10 +30,10 @@ class App extends Component {
         <Form getState={this.getState} />
         <BeamPreview
           numOfForces={this.state.numOfForces}
-          forceX1={this.state.force_1_X}
-          forceX2={this.state.force_2_X}
-          forceVal1={this.state.force_1_Value}
-          forceVal2={this.state.force_2_Value}
+          force1X={this.state.force_1_X}
+          force2X={this.state.force_2_X}
+          force1Val={this.state.force_1_Value}
+          force2Val={this.state.force_2_Value}
         />
       </>
     )
