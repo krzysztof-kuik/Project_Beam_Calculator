@@ -18,7 +18,7 @@ class Form extends Component {
   radioHandler = (e) => {
     this.setState({
       numOfForces: parseInt(e.target.value),
-    })
+    }, () => { this.props.getState(this.state) })
   }
 
   numInputHandler = (e, i) => {
@@ -35,21 +35,17 @@ class Form extends Component {
     else {
       this.setState({
         [e.target.name]: parseInt(e.target.value),
-      }, () => {this.props.getState(this.state)})
+      }, () => { this.props.getState(this.state) })
     }
-    console.log(this.state);
-
   }
 
 
   render() {
-    console.log(this.props);
+
     let forceForms = [];
     for (let i = 1; i <= this.state.numOfForces; i++) {
 
       let minXValue = i >= 2 ? parseInt(this.state[`force_${i - 1}_X`]) + 1 : 0;
-
-      // let xValue = parseInt(this.state[`force_${i - 1}_X`]) >= parseInt(this.state[`force_${i}_X`]) + 1 ? minXValue : parseInt(this.state[`force_${i}_X`]);
 
       forceForms.push(
 

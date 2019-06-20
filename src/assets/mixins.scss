@@ -1,0 +1,22 @@
+@mixin arrow($color, $width:30px, $height: 90px) {
+    position: relative;
+    width: 0;
+    height: 0;
+    border-left: ($width/2) solid transparent;
+    border-right: ($width/2) solid transparent;
+    border-top: ($height/3) solid $color;
+    position: absolute;
+    bottom: 0;
+    transform: translateX(-50%);
+    left: 0;
+
+    &:after {
+        content: '';
+        transform: translateX(-50%);
+        width: ($width/4);
+        height: (2*$height/3);
+        background-color: $color;
+        position: absolute;
+        bottom: ($height/3);
+    }
+}
