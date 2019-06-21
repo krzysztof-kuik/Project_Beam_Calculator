@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-
+import './form.scss';
 class Form extends Component {
 
   constructor(props) {
@@ -118,12 +118,15 @@ class Form extends Component {
 
       forceForms.push(
 
-        <div>
-          <label> Please specify value of Force Number {i}
+        <div className="form__forceInput">
+          <h4 className="form__badge">Force {i} : </h4>
+          <label className="form__forceInput-forceValue">
+            <span> value </span>
             <input onChange={this.numInputHandler} name={`force_${i}_Value`} type="number" value={this.state[`force_${i}_Value`]} />
           </label>
 
-          <label> Please specify x coordinate of Force Number {i}
+          <label className="form__forceInput-forceX">
+            <span> x-coordinate </span>
             <input onChange={e => this.numInputHandler(e, i)} name={`force_${i}_X`} type="number" value={xCoordValue} min={minXValue} max={maxValue} />
           </label>
         </div>
@@ -139,20 +142,26 @@ class Form extends Component {
     }
 
     return (
-      <form>
-        <label> Please specify beam length
-            <input onChange={this.lengthHandler} name="beamLength" type="number" min="0" value={this.state.beamLength} />
-        </label>
-        <div>
-          Please specify number of forces
-                    <label>
-            <input type="radio" name="numOfForces" value="1" onChange={this.radioHandler} />
-            1
-                    </label>
-          <label>
-            <input type="radio" name="numOfForces" value="2" onChange={this.radioHandler} />
-            2
-                    </label>
+      <form className="form">
+        <div className="form__container">
+
+          <label className="form__lengthInput">
+            <h4 className="form__badge">Beam length : </h4>
+            <input className="form__beamlengthInput" onChange={this.lengthHandler} name="beamLength" type="number" min="0" value={this.state.beamLength} />
+          </label>
+
+          <div className="form__numOfForcesInput">
+            <h4 className="form__badge">Number of forces : </h4>
+            <div class="form__numOfForcesInput-options">
+
+              <label className="form__numOfForcesInput-option1">
+                <input type="radio" name="numOfForces" value="1" onChange={this.radioHandler} /> 1
+                        </label>
+              <label className="form__numOfForcesInput-option2">
+                <input type="radio" name="numOfForces" value="2" onChange={this.radioHandler} /> 2
+                        </label>
+            </div>
+          </div>
         </div>
 
         {(this.state.numOfForces > 0 && this.state.beamLength > 0) &&

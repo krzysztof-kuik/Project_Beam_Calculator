@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Form from '../form/form'
+import './app.scss'
 import BeamPreview from '../beam_preview/beam_preview';
 
 class App extends Component {
@@ -26,7 +27,7 @@ class App extends Component {
 
   render() {
     return (
-      <>
+      <div className="appContainer">
         <Form getState={this.getState} />
         <BeamPreview
           numOfForces={this.state.numOfForces}
@@ -36,7 +37,7 @@ class App extends Component {
           force1Val={this.state.force_1_Value}
           force2Val={this.state.force_2_Value}
         />
-      </>
+      </div>
     )
   }
 }

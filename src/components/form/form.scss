@@ -1,0 +1,125 @@
+@import '../../assets/variables.scss';
+@import '../../assets/reset.scss';
+
+
+.form {
+  width: 700px;
+  font-family: $openSans;
+  font-size: 22px;
+  display: flex;
+  flex-direction: column;
+  margin: 5px auto;
+
+  .form__container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+
+
+    .form__lengthInput {
+      display: block;
+      background-color: $main;
+      display: flex;
+      justify-content: flex-start;
+      padding: 20px 70px;
+      margin: 5px 0;
+      border-radius: 20px;
+
+      .form__badge {
+        margin-right: 180px;
+        letter-spacing: 1px;
+
+      }
+
+      .form__beamlengthInput {
+        width: 120px;
+        text-align: center;
+        margin: 0 5px;
+        font-family: $raleway;
+        font-size: 18px;
+        color: $fourth;
+        font-weight: 400;
+        border: 2px solid $second;
+        border-radius: 8px;
+        outline: none;
+
+        &:focus {
+          border: 2px solid $third;
+        }
+      }
+    }
+
+    .form__numOfForcesInput {
+      background-color: $main;
+      display: flex;
+      padding: 20px 70px;
+      margin: 5px 0;
+      justify-content: flex-start;
+      border-radius: 20px;
+
+
+      .form__badge {
+        margin-right: 145px;
+        letter-spacing: 1px;
+
+      }
+
+      .form__numOfForcesInput-options {
+        display: flex;
+        justify-content: space-between;
+        width: 110px;
+        font-family: $raleway;
+        font-size: 18px;
+        color: $fourth;
+        font-weight: 400;
+      }
+    }
+  }
+
+  .form__forceInput {
+    background-color: $main;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin: 5px auto;
+    padding: 20px 70px;
+    border-radius: 20px;
+
+    .form__badge {
+      letter-spacing: 1px;
+    }
+
+
+    // .form__forceInput-forceValue {
+    //   margin-right: 20px;
+    // }
+
+    // .form__forceInput-forceValue,
+    // .form__forceInput-forceX {
+    //   display: block;
+    //   display: flex;
+    //   justify-content: flex-end;
+    //   padding: 20px 0;
+    //   // width: 100%;
+
+
+    input {
+      width: 100px;
+      height: 100%;
+      text-align: center;
+      margin: 0 8px;
+      font-family: $raleway;
+      font-size: 18px;
+      color: $fourth;
+      font-weight: 400;
+      border: 2px solid $second;
+      border-radius: 8px;
+      outline: none;
+
+      &:focus {
+        border: 2px solid $third;
+      }
+    }
+  }
+}

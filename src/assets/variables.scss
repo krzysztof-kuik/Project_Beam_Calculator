@@ -1,11 +1,23 @@
-$arrowWidth: 30px;
-$arrowHeight: 90px;
-$measureLineHeight: ($arrowHeight+30px);
+// @import './fonts/stylesheet.scss';
 
 // colors
 
-$main : rgba(124, 141, 179, 1.0);
-$second: rgba(232, 235, 243, 1.0);
-$third: rgba(176, 187, 212, 1.0);
-$fourth: rgba(89, 110, 157, 1.0);
-$fifth: rgba(55, 77, 127, 1.0);
+$main : rgba(255, 255, 255, 1.0);
+$second: rgb(235, 235, 235);
+$third: rgba(163, 163, 163, 1.0);
+$fourth: rgba(89, 89, 89, 1.0);
+$fifth: rgba(0, 0, 0, 1.0);
+
+// fonts
+
+$raleway : 'Open Sans',
+sans-serif;
+;
+$openSans : 'Raleway',
+sans-serif;
+
+//others
+
+$arrowWidth: 30px;
+$arrowHeight: 90px;
+$measureLineHeight: ($arrowHeight+30px);
