@@ -30,6 +30,7 @@ class App extends Component {
         <Form getState={this.getState} />
         <BeamPreview
           numOfForces={this.state.numOfForces}
+          beamLength={this.state.beamLength}
           force1X={this.state.force_1_X}
           force2X={this.state.force_2_X}
           force1Val={this.state.force_1_Value}
