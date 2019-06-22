@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Form from '../form/form'
 import './app.scss'
 import BeamPreview from '../beam_preview/beam_preview';
+import Charts from '../charts/charts';
 
 class App extends Component {
 
@@ -30,6 +31,14 @@ class App extends Component {
       <div className="appContainer">
         <Form getState={this.getState} />
         <BeamPreview
+          numOfForces={this.state.numOfForces}
+          beamLength={this.state.beamLength}
+          force1X={this.state.force_1_X}
+          force2X={this.state.force_2_X}
+          force1Val={this.state.force_1_Value}
+          force2Val={this.state.force_2_Value}
+        />
+        <Charts
           numOfForces={this.state.numOfForces}
           beamLength={this.state.beamLength}
           force1X={this.state.force_1_X}
