@@ -3,126 +3,126 @@
 
 
 .form {
-  width: 700px;
-  font-family: $openSans;
-  font-size: 22px;
-  display: flex;
-  flex-direction: column;
-  margin: 5px auto;
-  position: relative;
+	width: 700px;
+	font-family: $openSans;
+	font-size: 22px;
+	display: flex;
+	flex-direction: column;
+	margin: 5px auto;
+	position: relative;
 
-  .form__container {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-
-
-
-    .form__lengthInput {
-      display: block;
-      background-color: $main;
-      display: flex;
-      justify-content: flex-start;
-      padding: 20px 40px;
-      margin: 5px 0;
-      border-radius: 20px;
+	.form__container {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
 
 
-      .form__badge {
-        margin-right: 180px;
-        letter-spacing: 1px;
 
-      }
-
-      .form__beamlengthInput {
-        width: 120px;
-        text-align: center;
-        margin: 0 5px;
-        font-family: $raleway;
-        font-size: 18px;
-        color: $fourth;
-        font-weight: 400;
-        border: 2px solid $second;
-        border-radius: 8px;
-        outline: none;
-
-        &:focus {
-          border: 2px solid $third;
-        }
-      }
-    }
-
-    .form__numOfForcesInput {
-      background-color: $main;
-      display: flex;
-      padding: 20px 40px;
-      margin: 5px 0;
-      justify-content: flex-start;
-      border-radius: 20px;
+		.form__lengthInput {
+			display: block;
+			background-color: $main;
+			display: flex;
+			justify-content: flex-start;
+			padding: 20px 40px;
+			margin: 5px 0;
+			border-radius: 20px;
 
 
-      .form__badge {
-        margin-right: 145px;
-        letter-spacing: 1px;
+			.form__badge {
+				margin-right: 180px;
+				letter-spacing: 1px;
 
-      }
+			}
 
-      .form__numOfForcesInput-options {
-        display: flex;
-        justify-content: space-between;
-        width: 110px;
-        font-family: $raleway;
-        font-size: 18px;
-        color: $fourth;
-        font-weight: 400;
-      }
-    }
-  }
+			.form__beamlengthInput {
+				width: 120px;
+				text-align: center;
+				margin: 0 5px;
+				font-family: $raleway;
+				font-size: 18px;
+				color: $fourth;
+				font-weight: 400;
+				border: 2px solid $second;
+				border-radius: 8px;
+				outline: none;
 
-  .form__forceInput {
-    background-color: $main;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    margin: 5px auto;
-    padding: 20px 40px;
-    border-radius: 20px;
+				&:focus {
+					border: 2px solid $third;
+				}
+			}
+		}
 
-    .form__badge {
-      letter-spacing: 1px;
-    }
-
-    input {
-      width: 80px;
-      height: 100%;
-      text-align: center;
-      margin: 0 8px;
-      font-family: $raleway;
-      font-size: 18px;
-      color: $fourth;
-      font-weight: 400;
-      border: 2px solid $second;
-      border-radius: 8px;
-      outline: none;
-
-      &:focus {
-        border: 2px solid $third;
-      }
-    }
-  }
-
-  .errorAlert {
-    margin: 5px auto;
-    padding: 5px 40px;
-    border-radius: 10px;
-    width: 100%;
-    position: absolute;
-    right: 0;
-    bottom: -10px;
-    background-color: $alert;
-    transform: translateY(100%);
-    text-align: center;
+		.form__numOfForcesInput {
+			background-color: $main;
+			display: flex;
+			padding: 20px 40px;
+			margin: 5px 0;
+			justify-content: flex-start;
+			border-radius: 20px;
 
 
-  }
+			.form__badge {
+				margin-right: 145px;
+				letter-spacing: 1px;
+
+			}
+
+			.form__numOfForcesInput-options {
+				display: flex;
+				justify-content: space-between;
+				width: 110px;
+				font-family: $raleway;
+				font-size: 18px;
+				color: $fourth;
+				font-weight: 400;
+			}
+		}
+	}
+
+	.form__forceInput {
+		background-color: $main;
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+		margin: 5px auto;
+		padding: 20px 40px;
+		border-radius: 20px;
+
+		.form__badge {
+			letter-spacing: 1px;
+		}
+
+		input {
+			width: 80px;
+			height: 100%;
+			text-align: center;
+			margin: 0 8px;
+			font-family: $raleway;
+			font-size: 18px;
+			color: $fourth;
+			font-weight: 400;
+			border: 2px solid $second;
+			border-radius: 8px;
+			outline: none;
+
+			&:focus {
+				border: 2px solid $third;
+			}
+		}
+	}
+
+	.errorAlert {
+		margin: 5px auto;
+		padding: 5px 40px;
+		border-radius: 10px;
+		width: 100%;
+		position: absolute;
+		right: 0;
+		bottom: -10px;
+		background-color: $alert;
+		transform: translateY(100%);
+		text-align: center;
+
+
+	}
 }

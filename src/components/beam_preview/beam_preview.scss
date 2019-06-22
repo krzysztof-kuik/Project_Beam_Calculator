@@ -2,92 +2,92 @@
 @import '../../assets/variables.scss';
 
 .beamPreview {
-  // width: 80%;
-  width: 900px;
-  height: 400px;
-  border: 5px solid $third;
-  background-color: $main;
-  border-radius: 30px;
-  margin: 20px auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  // display: flex;
-  // flex-direction: column;
-  // justify-content: center;
+	// width: 80%;
+	width: 900px;
+	height: 400px;
+	border: 5px solid $third;
+	background-color: $main;
+	border-radius: 30px;
+	margin: 20px auto;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	// display: flex;
+	// flex-direction: column;
+	// justify-content: center;
 
-  .beamContainer {
-    // width: 80%;
-    height: 80%;
-    background-color: transparent;
-    position: relative;
-    display: flex;
-    align-items: flex-end;
-    border-left: 2px solid black;
-    border-right: 2px solid black;
+	.beamContainer {
+		// width: 80%;
+		height: 80%;
+		background-color: transparent;
+		position: relative;
+		display: flex;
+		align-items: flex-end;
+		border-left: 2px solid black;
+		border-right: 2px solid black;
 
-    .beamContainer__dimensionArrow {
-      @include dimensionArrow();
-      align-self: flex-start;
-    }
+		.beamContainer__dimensionArrow {
+			@include dimensionArrow();
+			align-self: flex-start;
+		}
 
-    .forceContainer {
-      // height: $measureLineHeight;
-      position: absolute;
-      background-color: transparent;
+		.forceContainer {
+			// height: $measureLineHeight;
+			position: absolute;
+			background-color: transparent;
 
 
 
-      .forceContainer__force {
+			.forceContainer__force {
 
-        // width: 50px;
-        // height: 80px;
-        // border: 1px solid black;
-        // position: absolute;
-        // bottom: 0;
-        @include arrow(black);
+				// width: 50px;
+				// height: 80px;
+				// border: 1px solid black;
+				// position: absolute;
+				// bottom: 0;
+				@include arrow(black);
 
-        &.force_1 {
-          z-index: 2;
-        }
+				&.force_1 {
+					z-index: 2;
+				}
 
-        &.force_2 {
-          z-index: 1;
+				&.force_2 {
+					z-index: 1;
 
-        }
+				}
 
-        &:hover .forceContainer__badge {
-          display: block;
-        }
+				&:hover .forceContainer__badge {
+					display: block;
+				}
 
-        .forceContainer__badge {
-          display: none;
-          width: 60px;
-          border: 1px solid black;
-          position: relative;
-          bottom: 1.3*$arrowHeight;
-          background-color: white;
+				.forceContainer__badge {
+					display: none;
+					width: 60px;
+					border: 1px solid black;
+					position: relative;
+					bottom: 1.3*$arrowHeight;
+					background-color: white;
 
-          // &.no1 {
-          //   z-index: 2;
-          // }
+					// &.no1 {
+					//   z-index: 2;
+					// }
 
-          // &.no2 {
-          //   z-index: 1;
-          // }
+					// &.no2 {
+					//   z-index: 1;
+					// }
 
-        }
-      }
-    }
+				}
+			}
+		}
 
-    .beamContainer__beam {
-      width: 100%;
-      height: 10px;
-      background-color: black;
-      position: absolute;
-      bottom: 0;
-      transform: translateY(100%);
-    }
+		.beamContainer__beam {
+			width: 100%;
+			height: 10px;
+			background-color: black;
+			position: absolute;
+			bottom: 0;
+			transform: translateY(100%);
+		}
 
-  }
+	}
 }
