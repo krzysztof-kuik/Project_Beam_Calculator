@@ -65,7 +65,14 @@ class Form extends Component {
     }
   }
 
-  numInputHandler = (e, i) => {
+  forceInputHandler = (e, i) => {
+    this.setState({
+      [e.target.name]: parseInt(e.target.value)
+    }, () => { this.props.getState(this.state) }
+    )
+  }
+
+  xCoordInputHandler = (e, i) => {
     let nMinusOneEl = parseInt(this.state[`force_${i - 1}_X`])
     let nEl = parseInt(this.state[`force_${i}_X`]);
     let nPlusOneEl = parseInt(this.state[`force_${i + 1}_X`]);
@@ -116,29 +123,31 @@ class Form extends Component {
       let maxValue = this.state.beamLength;
       let xCoordValue = this.state[`force_${i}_X`] <= maxValue ? this.state[`force_${i}_X`] : maxValue;
 
+      if (parseInt(this.state[`force_${i - 1}_X`]) > parseInt(this.state[`force_${i}_X`])) {
+        errorInfo.push(
+          <div className="errorAlert">
+            Value of Force {i} should be greater than Force {i - 1}
+          </div>
+        )
+      }
       forceForms.push(
 
         <div className="form__forceInput">
           <h4 className="form__badge">Force {i} : </h4>
           <label className="form__forceInput-forceValue">
             <span> value </span>
-            <input onChange={this.numInputHandler} name={`force_${i}_Value`} type="number" value={this.state[`force_${i}_Value`]} />
+            <input onChange={this.forceInputHandler} name={`force_${i}_Value`} type="number" value={this.state[`force_${i}_Value`]} />
+            [N]
           </label>
 
           <label className="form__forceInput-forceX">
             <span> x-coordinate </span>
-            <input onChange={e => this.numInputHandler(e, i)} name={`force_${i}_X`} type="number" value={xCoordValue} min={minXValue} max={maxValue} />
+            <input onChange={e => this.xCoordInputHandler(e, i)} name={`force_${i}_X`} type="number" value={xCoordValue} min={minXValue} max={maxValue} />
+            [mm]
           </label>
         </div>
       )
 
-      if (parseInt(this.state[`force_${i - 1}_X`]) > parseInt(this.state[`force_${i}_X`])) {
-        errorInfo.push(
-          <div>
-            Value of Force {i} should be greater than Force {i - 1}
-          </div>
-        )
-      }
     }
 
     return (
@@ -148,6 +157,7 @@ class Form extends Component {
           <label className="form__lengthInput">
             <h4 className="form__badge">Beam length : </h4>
             <input className="form__beamlengthInput" onChange={this.lengthHandler} name="beamLength" type="number" min="0" value={this.state.beamLength} />
+            [mm]
           </label>
 
           <div className="form__numOfForcesInput">

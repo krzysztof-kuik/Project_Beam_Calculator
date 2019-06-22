@@ -9,6 +9,7 @@
   display: flex;
   flex-direction: column;
   margin: 5px auto;
+  position: relative;
 
   .form__container {
     width: 100%;
@@ -22,9 +23,10 @@
       background-color: $main;
       display: flex;
       justify-content: flex-start;
-      padding: 20px 70px;
+      padding: 20px 40px;
       margin: 5px 0;
       border-radius: 20px;
+
 
       .form__badge {
         margin-right: 180px;
@@ -53,7 +55,7 @@
     .form__numOfForcesInput {
       background-color: $main;
       display: flex;
-      padding: 20px 70px;
+      padding: 20px 40px;
       margin: 5px 0;
       justify-content: flex-start;
       border-radius: 20px;
@@ -83,29 +85,15 @@
     display: flex;
     justify-content: space-between;
     margin: 5px auto;
-    padding: 20px 70px;
+    padding: 20px 40px;
     border-radius: 20px;
 
     .form__badge {
       letter-spacing: 1px;
     }
 
-
-    // .form__forceInput-forceValue {
-    //   margin-right: 20px;
-    // }
-
-    // .form__forceInput-forceValue,
-    // .form__forceInput-forceX {
-    //   display: block;
-    //   display: flex;
-    //   justify-content: flex-end;
-    //   padding: 20px 0;
-    //   // width: 100%;
-
-
     input {
-      width: 100px;
+      width: 80px;
       height: 100%;
       text-align: center;
       margin: 0 8px;
@@ -121,5 +109,20 @@
         border: 2px solid $third;
       }
     }
+  }
+
+  .errorAlert {
+    margin: 5px auto;
+    padding: 5px 40px;
+    border-radius: 10px;
+    width: 100%;
+    position: absolute;
+    right: 0;
+    bottom: -10px;
+    background-color: $alert;
+    transform: translateY(100%);
+    text-align: center;
+
+
   }
 }
