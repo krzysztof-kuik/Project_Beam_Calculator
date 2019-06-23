@@ -4,6 +4,9 @@ import {
 	LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
 } from 'recharts';
 
+
+
+
 class Charts extends Component {
 	constructor(props) {
 		super(props);
@@ -43,50 +46,36 @@ class Charts extends Component {
 				)
 			}
 		} else {
+
 			calcPoints.push(force1X, force2X);
 			sortCalcPoints();
-			for (let i = 0; i < calcPoints.length; i++) {
-				let xCoordinate = calcPoints[i];
+			for (let i = 0; i < 2; i++) {
+				data.push(
+					{
+						x: calcPoints[i],
+						torque: parseFloat((reactionA * calcPoints[i]).toFixed(1))
+					}
+				)
+			}
+			for (let i = 1; i < 3; i++) {
+
+				data.push(
+					{
+						x: calcPoints[i],
+						torque: parseFloat((reactionA * calcPoints[i] - force1Val * (calcPoints[i] - force1X)).toFixed(1))
+					}
+				)
+			}
+			for (let i = 2; i < calcPoints.length; i++) {
 
 				data.push({
 					x: calcPoints[i],
-					torque: parseFloat((reactionA * xCoordinate - force1Val * (xCoordinate - force1X)).toFixed(1))
+					torque: parseFloat((reactionA * calcPoints[i] - force1Val * (calcPoints[i] - force1X) - force2Val * (calcPoints[i] - force2X)).toFixed(1))
 				})
 			}
+
 		}
 
-
-
-
-		// for (let i = 0.0; parseFloat((i).toFixed(1)) < force1X; i += parseFloat((force1X / 10).toFixed(1))) {
-		// 	let index = parseFloat((i).toFixed(1));
-
-		// 	data.push(
-		// 		{
-		// 			x: index,
-		// 			torque: parseFloat((reactionA * i).toFixed(1))
-		// 		}
-		// 	)
-		// 	// data[index] = parseFloat((reactionA * i).toFixed(1));
-		// }
-		// console.log(data);
-
-		// let border = numOfForces < 2 ? beamLength : force2X;
-
-		// for (let i = parseFloat(force1X); parseFloat((i).toFixed(1)) <= border; i += parseFloat(((border - force1X) / 10).toFixed(1))) {
-
-		// 	console.log(i);
-
-		// 	let index = parseFloat((i).toFixed(1));
-
-		// 	data.push(
-		// 		{
-		// 			x: index,
-		// 			torque: parseFloat((reactionA * i - force1Val * (i - force1X)).toFixed(1))
-		// 		}
-		// 	)
-		// 	// data[index] = parseFloat((reactionA * i - force1Val * (i - force1X)).toFixed(1));
-		// }
 		console.log(data);
 		this.setState({
 			data: data
@@ -109,6 +98,10 @@ class Charts extends Component {
 		}, this.dataPreprocessor)
 	}
 
+
+
+
+
 	render() {
 		console.log(this);
 		// console.log(this.props);
@@ -118,11 +111,11 @@ class Charts extends Component {
 				<div className="chartsContainer">
 					<LineChart
 						width={860} height={400} data={this.state.data}
-						margin={{ top: 5, right: 0, left: 0, bottom: 5 }}
+						margin={{ top: 10, right: 0, left: 0, bottom: 10 }}
 					>
 						<CartesianGrid strokeDasharray="3 3" />
-						<XAxis dataKey="x" type="number" scale="linear" domain={[0, this.state.beamLength]} />
-						<YAxis type="number" scale="auto" domain={['dataMin', 'dataMax']} />
+						<XAxis dataKey="x" type="number" tickCount={10} scale="linear" domain={[0, this.state.beamLength]} unit="mm" />>
+							<YAxis dataKey="torque" type="number" tickCount={5} scale="linear" domain={['dataMin', 'dataMax']} interval={0} allowDecimals={true} />
 						<Tooltip />
 						<Legend />
 						<Line type="linear" dataKey="torque" stroke="#8884d8" activeDot={{ r: 8 }} />

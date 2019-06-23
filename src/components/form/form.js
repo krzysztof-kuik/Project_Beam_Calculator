@@ -13,6 +13,15 @@ class Form extends Component {
       force_1_X: 0,
       force_2_X: 0
     }
+
+    this.allerts = [
+      <h4 className="alertContent">
+        Please specify both: beam length and number of forces
+            </h4>,
+      <h4 className="alertContent">
+        x-coordinate of Force 2 should be greater than x-coordinate of Force 1
+      </h4>
+    ];
   }
 
   radioHandler = (e) => {
@@ -115,7 +124,7 @@ class Form extends Component {
   render() {
 
     let forceForms = [];
-    let errorInfo = [];
+    // let errorInfo = false;
     for (let i = 1; i <= this.state.numOfForces; i++) {
 
       let minXValue = i >= 2 ? parseInt(this.state[`force_${i - 1}_X`]) + 0 : 0;
@@ -123,13 +132,13 @@ class Form extends Component {
       let maxValue = this.state.beamLength;
       let xCoordValue = this.state[`force_${i}_X`] <= maxValue ? this.state[`force_${i}_X`] : maxValue;
 
-      if (parseInt(this.state[`force_${i - 1}_X`]) > parseInt(this.state[`force_${i}_X`])) {
-        errorInfo.push(
-          <div className="errorAlert">
-            Value of Force {i} should be greater than Force {i - 1}
-          </div>
-        )
-      }
+      // if (parseInt(this.state[`force_${i - 1}_X`]) > parseInt(this.state[`force_${i}_X`])) {
+      //   allerts.push(
+      //     <h4 className="alertContent">
+      //       Value of Force {i} should be greater than Force {i - 1}
+      //     </h4>
+      //   )
+      // }
       forceForms.push(
 
         <div className="form__forceInput">
@@ -149,9 +158,34 @@ class Form extends Component {
       )
 
     }
+    console.log(typeof this.state.beamLength, typeof this.state.numOfForces);
+    console.log(this.state.beamLength, this.state.numOfForces);
 
     return (
       <form className="form">
+
+        {
+          (this.state.beamLength > 0 && this.state.numOfForces > 0) ?
+            <div style={{ maxHeight: "0" }} class="alertContainer info">
+              {this.allerts[0]}
+            </div>
+            : <div style={{ maxHeight: "60px" }} class="alertContainer info">
+              {this.allerts[0]}
+            </div>
+
+        }
+        {
+          (this.state.force_1_X > this.state.force_2_X && this.state.numOfForces > 1) ?
+            <div style={{ maxHeight: "60px" }} class="alertContainer warning">
+              {this.allerts[1]}
+            </div>
+            :
+            <div style={{ maxHeight: "0" }} class="alertContainer warning">
+              {this.allerts[1]}
+            </div>
+
+        }
+
         <div className="form__container">
 
           <label className="form__lengthInput">
@@ -176,8 +210,9 @@ class Form extends Component {
 
         {(this.state.numOfForces > 0 && this.state.beamLength > 0) &&
           forceForms
+
+          // {errorInfo}
         }
-        {errorInfo}
 
       </form>
     )

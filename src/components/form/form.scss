@@ -3,36 +3,63 @@
 
 
 .form {
-	width: 700px;
+	width: 900px;
 	font-family: $openSans;
 	font-size: 22px;
 	display: flex;
 	flex-direction: column;
-	margin: 5px auto;
+	margin: 0 auto;
 	position: relative;
+
+	.alertContainer {
+		width: 100%;
+		border-radius: 0 0 20px 20px;
+		color: $main;
+		overflow: hidden;
+		max-height: 0;
+		transition: max-height 1s;
+
+		&.info {
+			background-color: $info;
+		}
+
+		&.warning {
+			background-color: $alert;
+		}
+
+		.alertContent {
+			margin: 15px 0;
+			text-align: center;
+			letter-spacing: 1px;
+		}
+	}
+
+	.form__badge {
+		margin-right: 10px;
+		letter-spacing: 1px;
+		color: $fourth;
+	}
 
 	.form__container {
 		width: 100%;
-		display: flex;
-		flex-direction: column;
-
-
 
 		.form__lengthInput {
+			width: 49%;
+			float: left;
 			display: block;
 			background-color: $main;
 			display: flex;
-			justify-content: flex-start;
+			justify-content: space-between;
 			padding: 20px 40px;
-			margin: 5px 0;
+			margin: 10px 0;
 			border-radius: 20px;
 
 
-			.form__badge {
-				margin-right: 180px;
-				letter-spacing: 1px;
+			// .form__badge {
+			// 	margin-right: 10px;
+			// 	letter-spacing: 1px;
 
-			}
+			// }
 
 			.form__beamlengthInput {
 				width: 120px;
@@ -53,28 +80,35 @@
 		}
 
 		.form__numOfForcesInput {
+			width: 49%;
 			background-color: $main;
+			float: right;
 			display: flex;
 			padding: 20px 40px;
-			margin: 5px 0;
-			justify-content: flex-start;
+			margin: 10px 0;
+			justify-content: space-between;
 			border-radius: 20px;
 
 
-			.form__badge {
-				margin-right: 145px;
-				letter-spacing: 1px;
+			// .form__badge {
+			// 	margin-right: 10px;
+			// 	letter-spacing: 1px;
 
-			}
+			// }
 
 			.form__numOfForcesInput-options {
 				display: flex;
 				justify-content: space-between;
 				width: 110px;
 				font-family: $raleway;
-				font-size: 18px;
+				font-size: 20px;
 				color: $fourth;
 				font-weight: 400;
+
+				input {
+					margin: 0 8 px;
+				}
+
 			}
 		}
 	}
@@ -84,13 +118,13 @@
 		width: 100%;
 		display: flex;
 		justify-content: space-between;
-		margin: 5px auto;
-		padding: 20px 40px;
+		margin: 10px auto;
+		padding: 20px 85px 20px 40px;
 		border-radius: 20px;
 
-		.form__badge {
-			letter-spacing: 1px;
-		}
+		// .form__badge {
+		// 	letter-spacing: 1px;
+		// }
 
 		input {
 			width: 80px;
