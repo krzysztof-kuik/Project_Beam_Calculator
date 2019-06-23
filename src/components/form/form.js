@@ -75,10 +75,16 @@ class Form extends Component {
   }
 
   forceInputHandler = (e, i) => {
+
     this.setState({
-      [e.target.name]: parseInt(e.target.value)
+      [e.target.name]: parseInt([e.target.value])
     }, () => { this.props.getState(this.state) }
     )
+
+    if (e.target.value === '-') {
+      console.log("negative");
+
+    }
   }
 
   xCoordInputHandler = (e, i) => {
@@ -139,9 +145,13 @@ class Form extends Component {
       //     </h4>
       //   )
       // }
+      console.log(forceForms);
+
+      let style = { maxHeight: '100px', padding: '20px 85px 20px 40px' };
       forceForms.push(
 
-        <div className="form__forceInput">
+
+        <div className="form__forceInput" style={style}>
           <h4 className="form__badge">Force {i} : </h4>
           <label className="form__forceInput-forceValue">
             <span> value </span>

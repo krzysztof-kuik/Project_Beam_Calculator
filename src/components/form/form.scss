@@ -10,27 +10,33 @@
 	flex-direction: column;
 	margin: 0 auto;
 	position: relative;
+	color: $fourth;
 
 	.alertContainer {
+		letter-spacing: 1px;
 		width: 100%;
 		border-radius: 0 0 20px 20px;
 		color: $main;
 		overflow: hidden;
 		max-height: 0;
-		transition: max-height 1s;
+		transition: max-height 1200ms ease-in-out;
 
 		&.info {
 			background-color: $info;
+			box-shadow: $infoShadow;
+
 		}
 
 		&.warning {
 			background-color: $alert;
+			box-shadow: $warningShadow;
 		}
 
 		.alertContent {
 			margin: 15px 0;
 			text-align: center;
 			letter-spacing: 1px;
+			font-family: $openSans;
 		}
 	}
 
@@ -42,6 +48,8 @@
 
 	.form__container {
 		width: 100%;
+		margin-top: 10px;
+
 
 		.form__lengthInput {
 			width: 49%;
@@ -53,6 +61,7 @@
 			padding: 20px 40px;
 			margin: 10px 0;
 			border-radius: 20px;
+			box-shadow: $shadow;
 
 
 			// .form__badge {
@@ -88,6 +97,8 @@
 			margin: 10px 0;
 			justify-content: space-between;
 			border-radius: 20px;
+			box-shadow: $shadow;
+
 
 
 			// .form__badge {
@@ -119,15 +130,19 @@
 		display: flex;
 		justify-content: space-between;
 		margin: 10px auto;
-		padding: 20px 85px 20px 40px;
+		// padding: 20px 85px 20px 40px;
 		border-radius: 20px;
+		overflow: hidden;
+		max-height: 0;
+		transition: max-height 1200ms ease-in-out;
+		box-shadow: $shadow;
 
 		// .form__badge {
 		// 	letter-spacing: 1px;
 		// }
 
 		input {
-			width: 80px;
+			width: 120px;
 			height: 100%;
 			text-align: center;
 			margin: 0 8px;
