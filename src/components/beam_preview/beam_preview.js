@@ -14,7 +14,7 @@ class BeamPreview extends Component {
     for (let i = 1; i <= this.props.numOfForces; i++) {
 
       let forceXcoordinate = (this.props[`force${i}X`] / this.props.beamLength) * previewWidth;
-      let showDimensionLine = forceXcoordinate >= 60;
+      let showDimensionLine = forceXcoordinate >= 100;
       let forceClass = this.props[`force${i}Val`] < 0 ? `forceContainer__force force_${i} negative` : `forceContainer__force force_${i}`
       let forcesRenderCondition = this.props.numOfForces > 0;
       let forceStyle = {

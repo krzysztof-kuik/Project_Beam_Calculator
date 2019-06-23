@@ -7,7 +7,7 @@
 	// height: 400px;
 	// border: 5px solid $third;
 	background-color: $main;
-	border-radius: 30px;
+	border-radius: 30px 30px 0 0;
 	margin: 20px auto;
 	display: flex;
 	flex-direction: column;
@@ -36,6 +36,7 @@
 	.beamContainer {
 		// width: 80%;
 		font-family: $raleway;
+		position: relative;
 		font-size: 18px;
 		color: $fourth;
 		height: 300px;
@@ -47,10 +48,15 @@
 		border-right: 2px solid black;
 		margin: 50px auto 60px auto;
 
+		&::before {}
+
+		&::after {}
+
 		.beamContainer__dimensionArrow {
 			@include dimensionArrow();
 			align-self: flex-start;
 			font-size: 20px;
+			min-height: 27px;
 		}
 
 		.forceContainer {
