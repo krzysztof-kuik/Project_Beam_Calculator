@@ -58,3 +58,14 @@
   }
 
 }
+
+@mixin support($color, $width:40px, $height: 100px) {
+  position: relative;
+  width: 0;
+  height: 0;
+  border-left: ($width/2) solid transparent;
+  border-right: ($width/2) solid transparent;
+  border-top: ($height/3) solid $color;
+  position: absolute;
+  
+}

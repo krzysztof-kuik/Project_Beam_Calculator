@@ -114,11 +114,33 @@ class Charts extends Component {
 						margin={{ top: 10, right: 0, left: 0, bottom: 10 }}
 					>
 						<CartesianGrid strokeDasharray="3 3" />
-						<XAxis dataKey="x" type="number" tickCount={10} scale="linear" domain={[0, this.state.beamLength]} unit="mm" />>
-							<YAxis dataKey="torque" type="number" tickCount={5} scale="linear" domain={['dataMin', 'dataMax']} interval={0} allowDecimals={true} />
+						<XAxis dataKey="x"
+							type="number"
+							tickCount={5}
+							scale="linear"
+							interval={0}
+							domain={[0, this.state.beamLength]}
+							label="x [mm]"
+							tick={{ fontSize: 18 }}
+							dy={10}
+						/>
+						<YAxis
+							dataKey="torque"
+							type="number"
+							tickCount={5}
+							scale="linear"
+							domain={['dataMin', 'dataMax']}
+							interval={0}
+							allowDecimals={true}
+							label="Torque [Nmm]"
+							angle={-45}
+							dx={-5}
+							textAnchor="end"
+							tick={{ fontSize: 18 }}
+						/>
 						<Tooltip />
 						<Legend />
-						<Line type="linear" dataKey="torque" stroke="#8884d8" activeDot={{ r: 8 }} />
+						<Line type="linear" dataKey="torque" stroke="#8884d8" activeDot={{ r: 8 }} stroke="rgb(121, 121, 121)" strokeWidth="3" />
 					</LineChart>
 				</div>
 			</section>
