@@ -144,9 +144,20 @@ class Charts extends Component {
 		let { numOfForces, beamLength, force1X, force2X, force1Val, force2Val } = this.props;
 		console.log(beamLength);
 
-		let reactionA = (force1Val * (beamLength - force1X) + force2Val * (beamLength - force2X)) / beamLength;
+		let reactionA = 0;
+		let reactionB = 0;
 
-		let reactionB = (force1Val * force1X + force2Val * force2X) / beamLength;
+		if (numOfForces < 2) {
+			reactionA = (force1Val * (beamLength - force1X)) / beamLength;
+
+			reactionB = (force1Val * force1X) / beamLength;
+		} else {
+
+			reactionA = (force1Val * (beamLength - force1X) + force2Val * (beamLength - force2X)) / beamLength;
+
+			reactionB = (force1Val * force1X + force2Val * force2X) / beamLength;
+
+		}
 
 		// let signleForceCondtition = beamLength * force1Val * force1X !== 0;
 		// let doubleForceCondtition = beamLength * force1Val * force1X * force2Val * force2X !== 0;
