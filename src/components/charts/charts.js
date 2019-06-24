@@ -14,11 +14,7 @@ class Charts extends Component {
 			reactionA: 0,
 			reactionB: 0,
 			solved: false,
-			aa: this.props.beamLength,
-
-
 		}
-
 		this.signleForceCondtition = false;
 		this.doubleForceCondtition = false;
 		this.buttonActive = false;
@@ -86,6 +82,18 @@ class Charts extends Component {
 						torque: parseFloat((reactionA * calcPoints[i]).toFixed(1))
 					}
 				)
+				cuttingForceData.push(
+					{
+						x: calcPoints[i],
+						cutForce: i === 0 ? 0 : reactionA,
+						a: 1
+					},
+					{
+						x: calcPoints[i],
+						cutForce: i === 0 ? reactionA : reactionA - force1Val,
+						b: 2
+					}
+				)
 			}
 			for (let i = 1; i < 3; i++) {
 
@@ -93,6 +101,22 @@ class Charts extends Component {
 					{
 						x: calcPoints[i],
 						torque: parseFloat((reactionA * calcPoints[i] - force1Val * (calcPoints[i] - force1X)).toFixed(1))
+					}
+				)
+
+			}
+			for (let i = 2; i < calcPoints.length; i++) {
+
+				cuttingForceData.push(
+					{
+						x: calcPoints[i],
+						cutForce: i === calcPoints.length - 1 ? reactionA - force1Val - force2Val : reactionA - force1Val,
+						c: 3
+					},
+					{
+						x: calcPoints[i],
+						cutForce: i === calcPoints.length - 1 ? 0 : reactionA - force1Val - force2Val,
+						d: 4
 					}
 				)
 			}
@@ -127,12 +151,13 @@ class Charts extends Component {
 		// let signleForceCondtition = beamLength * force1Val * force1X !== 0;
 		// let doubleForceCondtition = beamLength * force1Val * force1X * force2Val * force2X !== 0;
 
-		if ((numOfForces === 1 && this.state.signleForceCondtition) || (numOfForces > 1 && this.state.doubleForceCondtition)) {
+		if ((numOfForces === 1 && this.signleForceCondtition) || (numOfForces > 1 && this.doubleForceCondtition)) {
+			console.log('ok');
 
 			this.setState({
 				reactionA: reactionA,
 				reactionB: reactionB,
-				solved: true,
+				solved: this.buttonActive ? true : false
 
 			}, this.dataPreprocessor)
 
@@ -145,9 +170,9 @@ class Charts extends Component {
 
 	render() {
 
-		this.signleForceCondtition = ((this.props.beamLength * this.props.force1Val * this.props.force1X) === 0) || isNaN(this.props.beamLength * this.props.force1Val * this.props.force1X) ? false : true;
+		this.signleForceCondtition = ((this.props.beamLength * this.props.force1Val) === 0) || isNaN(this.props.beamLength * this.props.force1Val) ? false : true;
 
-		this.doubleForceCondtition = ((this.props.beamLength * this.props.force1Val * this.props.force1X * this.props.force2X * this.props.force2Val) === 0) || isNaN(this.props.beamLength * this.props.force1Val * this.props.force1X * this.props.force2X * this.props.force2Val) ? false : true;
+		this.doubleForceCondtition = ((this.props.beamLength * this.props.force1Val * this.props.force2Val) === 0) || isNaN(this.props.beamLength * this.props.force1X * this.props.force2X) ? false : true;
 
 		this.buttonActive = ((this.props.numOfForces === 1 & this.signleForceCondtition) || (this.props.numOfForces === 2 && this.doubleForceCondtition)) ? true : false;
 
@@ -156,87 +181,90 @@ class Charts extends Component {
 		console.log("button activ:", this.buttonActive);
 
 		let buttonClass = this.buttonActive ? "solveButton" : "solveButton disabled";
+		let chartsSectionClass = this.state.solved ? "chartsSection visible" : "chartsSection hidden";
 		// console.log(this.props);
 		return (
 			<>
 				<button className={buttonClass} onClick={this.clickHandler}><span>SOLVE</span></button>
-				<section className="chartsSection">
-					<div className="chartsContainer hidden">
-						<LineChart
-							width={860} height={400} data={this.state.torqueData}
-							margin={{ top: 10, right: 0, left: 0, bottom: 10 }}
-						>
-							<CartesianGrid strokeDasharray="3 3" />
-							<XAxis dataKey="x"
-								type="number"
-								tickCount={5}
-								scale="linear"
-								interval={0}
-								domain={[0, this.state.beamLength]}
-								// label="x [mm]"
-								tick={{ fontSize: 18 }}
-								dy={10}
-							/>
-							<YAxis
-								dataKey="torque"
-								type="number"
-								tickCount={5}
-								// scale="linear"
-								domain={['dataMin', 'dataMax']}
-								interval={0}
-								allowDecimals={true}
-								// label="Torque [Nmm]"
-								angle={-45}
-								dx={-5}
-								textAnchor="end"
-								tick={{ fontSize: 18 }}
-							/>
-							<Tooltip />
-							<Legend />
-							<Line type="linear" dataKey="torque" stroke="#8884d8" activeDot={{ r: 8 }} stroke="rgb(121, 121, 121)" strokeWidth="3" />
-						</LineChart>
+				<section className="chartsComponent">
+					<div className={chartsSectionClass}>
+						<div className="chartsContainer">
+							<LineChart
+								width={880} height={400} data={this.state.torqueData}
+								margin={{ top: 10, right: 20, left: 0, bottom: 10 }}
+							>
+								<CartesianGrid strokeDasharray="3 3" />
+								<XAxis dataKey="x"
+									type="number"
+									tickCount={5}
+									scale="linear"
+									interval={0}
+									domain={[0, this.state.beamLength]}
+									// label="x [mm]"
+									tick={{ fontSize: 18 }}
+									dy={10}
+								/>
+								<YAxis
+									dataKey="torque"
+									type="number"
+									tickCount={5}
+									scale="linear"
+									domain={['dataMin', 'dataMax']}
+									interval={0}
+									allowDecimals={true}
+									// label="Torque [Nmm]"
+									angle={-45}
+									dx={-5}
+									textAnchor="end"
+									tick={{ fontSize: 18 }}
+								/>
+								<Tooltip />
+								<Legend />
+								<Line type="linear" dataKey="torque" stroke="#8884d8" activeDot={{ r: 8 }} stroke="rgb(121, 121, 121)" strokeWidth="3" />
+							</LineChart>
 
 
-						<LineChart
-							width={860} height={400} data={this.state.cuttingForceData}
-							margin={{ top: 10, right: 0, left: 0, bottom: 10 }}
-						>
-							<CartesianGrid strokeDasharray="3 3" />
-							<XAxis dataKey="x"
-								type="number"
-								tickCount={5}
-								scale="linear"
-								interval={0}
-								domain={[0, this.state.beamLength]}
-								// label="x [mm]"
-								tick={{ fontSize: 18 }}
-								dy={10}
-								minTickGap={0}
-								allowDataOverflow={true}
+							<LineChart
+								width={880} height={400} data={this.state.cuttingForceData}
+								margin={{ top: 10, right: 20, left: 0, bottom: 10 }}
+							>
+								<CartesianGrid strokeDasharray="3 3" />
+								<XAxis dataKey="x"
+									type="number"
+									tickCount={5}
+									scale="linear"
+									interval={0}
+									domain={[0, this.state.beamLength]}
+									// label="x [mm]"
+									tick={{ fontSize: 18 }}
+									dy={10}
+									minTickGap={0}
+								// allowDataOverflow={false}
 
 
-							/>
-							<YAxis
-								dataKey="cutForce"
-								type="number"
-								tickCount={5}
-								// scale="linear"
-								domain={[dataMin => (1.1 * dataMin), dataMax => (1.1 * dataMax)]}
+								/>
+								<YAxis
+									dataKey="cutForce"
+									interval={0}
+									type="number"
+									tickCount={5}
+									scale="linear"
+									domain={[dataMin => (1.1 * dataMin), dataMax => (1.1 * dataMax)]}
 
-								// domain={[' 1.1 * dataMin', '1.1 * dataMax']}
-								interval={0}
-								allowDecimals={true}
-								// label="Torque [Nmm]"	
-								angle={-45}
-								dx={-5}
-								textAnchor="end"
-								tick={{ fontSize: 18 }}
+									// domain={[' 1.1 * dataMin', '1.1 * dataMax']}
+									allowDecimals={true}
+									// label="Torque [Nmm]"	
+									angle={-45}
+									dx={-5}
+									textAnchor="end"
+									tick={{ fontSize: 18 }}
 
-							/>
-							<Tooltip />
-							<Legend />
-							<Line type="linear" dataKey="cutForce" stroke="#8884d8" activeDot={{ r: 8 }} stroke="rgb(121, 121, 121)" strokeWidth="3" />
-						</LineChart>
+								/>
+								<Tooltip />
+								<Legend />
+								<Line type="linear" dataKey="cutForce" stroke="#8884d8" activeDot={{ r: 8 }} stroke="rgb(121, 121, 121)" strokeWidth="3" />
+							</LineChart>
+						</div>
 					</div>
 				</section>
 			</>
