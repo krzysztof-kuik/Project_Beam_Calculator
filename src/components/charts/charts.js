@@ -12,15 +12,24 @@ class Charts extends Component {
 		super(props);
 		this.state = {
 			reactionA: 0,
-			reactionB: 0
+			reactionB: 0,
+			solved: false,
+			aa: this.props.beamLength,
+
+
 		}
+
+		this.signleForceCondtition = false;
+		this.doubleForceCondtition = false;
+		this.buttonActive = false;
 	}
 
 	dataPreprocessor = () => {
 		let { numOfForces, beamLength, force1X, force2X, force1Val, force2Val } = this.props;
 		let { reactionA, reactionB } = this.state;
 		let calcPoints = [0, beamLength];
-		let data = [];
+		let torqueData = [];
+		let cuttingForceData = [];
 		let sortCalcPoints = () => {
 			return calcPoints.sort((a, b) => a - b);
 		}
@@ -30,18 +39,39 @@ class Charts extends Component {
 			calcPoints.push(force1X);
 			sortCalcPoints();
 			for (let i = 0; i < 2; i++) {
-				data.push(
+				torqueData.push(
 					{
 						x: calcPoints[i],
 						torque: parseFloat((reactionA * calcPoints[i]).toFixed(1))
 					}
 				)
+				cuttingForceData.push(
+					{
+						x: calcPoints[i],
+						cutForce: i === 0 ? 0 : reactionA
+					},
+					{
+						x: calcPoints[i],
+						cutForce: i === 0 ? reactionA : reactionA - force1Val
+					}
+				)
 			}
 			for (let i = 2; i < calcPoints.length; i++) {
-				data.push(
+				torqueData.push(
 					{
 						x: calcPoints[i],
 						torque: parseFloat((reactionA * calcPoints[i] - force1Val * (calcPoints[i] - force1X)).toFixed(1))
+					}
+				)
+
+				cuttingForceData.push(
+					{
+						x: calcPoints[i],
+						cutForce: reactionA - force1Val
+					},
+					{
+						x: calcPoints[i],
+						cutForce: 0
 					}
 				)
 			}
@@ -50,7 +80,7 @@ class Charts extends Component {
 			calcPoints.push(force1X, force2X);
 			sortCalcPoints();
 			for (let i = 0; i < 2; i++) {
-				data.push(
+				torqueData.push(
 					{
 						x: calcPoints[i],
 						torque: parseFloat((reactionA * calcPoints[i]).toFixed(1))
@@ -59,7 +89,7 @@ class Charts extends Component {
 			}
 			for (let i = 1; i < 3; i++) {
 
-				data.push(
+				torqueData.push(
 					{
 						x: calcPoints[i],
 						torque: parseFloat((reactionA * calcPoints[i] - force1Val * (calcPoints[i] - force1X)).toFixed(1))
@@ -68,7 +98,7 @@ class Charts extends Component {
 			}
 			for (let i = 2; i < calcPoints.length; i++) {
 
-				data.push({
+				torqueData.push({
 					x: calcPoints[i],
 					torque: parseFloat((reactionA * calcPoints[i] - force1Val * (calcPoints[i] - force1X) - force2Val * (calcPoints[i] - force2X)).toFixed(1))
 				})
@@ -76,26 +106,37 @@ class Charts extends Component {
 
 		}
 
-		console.log(data);
+		console.log(torqueData, cuttingForceData);
 		this.setState({
-			data: data
+			torqueData: torqueData,
+			cuttingForceData: cuttingForceData
 		})
 
 
 	}
 
-	reactionsCalc = () => {
-		let { beamLength, force1X, force2X, force1Val, force2Val } = this.props;
+	clickHandler = () => {
+
+		let { numOfForces, beamLength, force1X, force2X, force1Val, force2Val } = this.props;
 		console.log(beamLength);
 
 		let reactionA = (force1Val * (beamLength - force1X) + force2Val * (beamLength - force2X)) / beamLength;
 
 		let reactionB = (force1Val * force1X + force2Val * force2X) / beamLength;
 
-		this.setState({
-			reactionA: reactionA,
-			reactionB: reactionB
-		}, this.dataPreprocessor)
+		// let signleForceCondtition = beamLength * force1Val * force1X !== 0;
+		// let doubleForceCondtition = beamLength * force1Val * force1X * force2Val * force2X !== 0;
+
+		if ((numOfForces === 1 && this.state.signleForceCondtition) || (numOfForces > 1 && this.state.doubleForceCondtition)) {
+
+			this.setState({
+				reactionA: reactionA,
+				reactionB: reactionB,
+				solved: true,
+
+			}, this.dataPreprocessor)
+
+		}
 	}
 
 
@@ -103,47 +144,102 @@ class Charts extends Component {
 
 
 	render() {
-		console.log(this);
+
+		this.signleForceCondtition = ((this.props.beamLength * this.props.force1Val * this.props.force1X) === 0) || isNaN(this.props.beamLength * this.props.force1Val * this.props.force1X) ? false : true;
+
+		this.doubleForceCondtition = ((this.props.beamLength * this.props.force1Val * this.props.force1X * this.props.force2X * this.props.force2Val) === 0) || isNaN(this.props.beamLength * this.props.force1Val * this.props.force1X * this.props.force2X * this.props.force2Val) ? false : true;
+
+		this.buttonActive = ((this.props.numOfForces === 1 & this.signleForceCondtition) || (this.props.numOfForces === 2 && this.doubleForceCondtition)) ? true : false;
+
+		console.log("forse 1 condition:", this.signleForceCondtition);
+		console.log("forse 1 condition:", this.doubleForceCondtition);
+		console.log("button activ:", this.buttonActive);
+
+		let buttonClass = this.buttonActive ? "solveButton" : "solveButton disabled";
 		// console.log(this.props);
 		return (
-			<section className="chartsSection">
-				<button onClick={this.reactionsCalc}>RESOLVE</button>
-				<div className="chartsContainer">
-					<LineChart
-						width={860} height={400} data={this.state.data}
-						margin={{ top: 10, right: 0, left: 0, bottom: 10 }}
-					>
-						<CartesianGrid strokeDasharray="3 3" />
-						<XAxis dataKey="x"
-							type="number"
-							tickCount={5}
-							scale="linear"
-							interval={0}
-							domain={[0, this.state.beamLength]}
-							label="x [mm]"
-							tick={{ fontSize: 18 }}
-							dy={10}
-						/>
-						<YAxis
-							dataKey="torque"
-							type="number"
-							tickCount={5}
-							scale="linear"
-							domain={['dataMin', 'dataMax']}
-							interval={0}
-							allowDecimals={true}
-							label="Torque [Nmm]"
-							angle={-45}
-							dx={-5}
-							textAnchor="end"
-							tick={{ fontSize: 18 }}
-						/>
-						<Tooltip />
-						<Legend />
-						<Line type="linear" dataKey="torque" stroke="#8884d8" activeDot={{ r: 8 }} stroke="rgb(121, 121, 121)" strokeWidth="3" />
-					</LineChart>
-				</div>
-			</section>
+			<>
+				<button className={buttonClass} onClick={this.clickHandler}><span>SOLVE</span></button>
+				<section className="chartsSection">
+					<div className="chartsContainer hidden">
+						<LineChart
+							width={860} height={400} data={this.state.torqueData}
+							margin={{ top: 10, right: 0, left: 0, bottom: 10 }}
+						>
+							<CartesianGrid strokeDasharray="3 3" />
+							<XAxis dataKey="x"
+								type="number"
+								tickCount={5}
+								scale="linear"
+								interval={0}
+								domain={[0, this.state.beamLength]}
+								// label="x [mm]"
+								tick={{ fontSize: 18 }}
+								dy={10}
+							/>
+							<YAxis
+								dataKey="torque"
+								type="number"
+								tickCount={5}
+								// scale="linear"
+								domain={['dataMin', 'dataMax']}
+								interval={0}
+								allowDecimals={true}
+								// label="Torque [Nmm]"
+								angle={-45}
+								dx={-5}
+								textAnchor="end"
+								tick={{ fontSize: 18 }}
+							/>
+							<Tooltip />
+							<Legend />
+							<Line type="linear" dataKey="torque" stroke="#8884d8" activeDot={{ r: 8 }} stroke="rgb(121, 121, 121)" strokeWidth="3" />
+						</LineChart>
+
+
+						<LineChart
+							width={860} height={400} data={this.state.cuttingForceData}
+							margin={{ top: 10, right: 0, left: 0, bottom: 10 }}
+						>
+							<CartesianGrid strokeDasharray="3 3" />
+							<XAxis dataKey="x"
+								type="number"
+								tickCount={5}
+								scale="linear"
+								interval={0}
+								domain={[0, this.state.beamLength]}
+								// label="x [mm]"
+								tick={{ fontSize: 18 }}
+								dy={10}
+								minTickGap={0}
+								allowDataOverflow={true}
+
+
+							/>
+							<YAxis
+								dataKey="cutForce"
+								type="number"
+								tickCount={5}
+								// scale="linear"
+								domain={[dataMin => (1.1 * dataMin), dataMax => (1.1 * dataMax)]}
+
+								// domain={[' 1.1 * dataMin', '1.1 * dataMax']}
+								interval={0}
+								allowDecimals={true}
+								// label="Torque [Nmm]"	
+								angle={-45}
+								dx={-5}
+								textAnchor="end"
+								tick={{ fontSize: 18 }}
+
+							/>
+							<Tooltip />
+							<Legend />
+							<Line type="linear" dataKey="cutForce" stroke="#8884d8" activeDot={{ r: 8 }} stroke="rgb(121, 121, 121)" strokeWidth="3" />
+						</LineChart>
+					</div>
+				</section>
+			</>
 		)
 	}
 }
