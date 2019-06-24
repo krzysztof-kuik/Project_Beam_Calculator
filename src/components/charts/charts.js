@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import './charts.scss';
 import {
-	LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
+	LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, AreaChart, Area
 } from 'recharts';
 
 
@@ -189,7 +189,7 @@ class Charts extends Component {
 				<section className="chartsComponent">
 					<div className={chartsSectionClass}>
 						<div className="chartsContainer">
-							<LineChart
+							<AreaChart
 								width={880} height={400} data={this.state.torqueData}
 								margin={{ top: 10, right: 20, left: 0, bottom: 10 }}
 							>
@@ -220,13 +220,13 @@ class Charts extends Component {
 								/>
 								<Tooltip />
 								<Legend />
-								<Line type="linear" dataKey="torque" stroke="#8884d8" activeDot={{ r: 8 }} stroke="rgb(121, 121, 121)" strokeWidth="3" />
-							</LineChart>
+								<Area type="linear" dataKey="torque" stroke="#8884d8" activeDot={{ r: 8 }} stroke="rgb(121, 121, 121)" strokeWidth="3" fill='rgb(235, 235, 235)' />
+							</AreaChart>
 
 
-							<LineChart
+							<AreaChart
 								width={880} height={400} data={this.state.cuttingForceData}
-								margin={{ top: 10, right: 20, left: 0, bottom: 10 }}
+								margin={{ top: 10, right: 20, left: 0, bottom: 10 }} 
 							>
 								<CartesianGrid strokeDasharray="3 3" />
 								<XAxis dataKey="x"
@@ -262,8 +262,8 @@ class Charts extends Component {
 								/>
 								<Tooltip />
 								<Legend />
-								<Line type="linear" dataKey="cutForce" stroke="#8884d8" activeDot={{ r: 8 }} stroke="rgb(121, 121, 121)" strokeWidth="3" />
-							</LineChart>
+								<Area type="linear" dataKey="cutForce" stroke="#8884d8" fill='rgb(235, 235, 235)' activeDot={{ r: 8 }} stroke="rgb(121, 121, 121)" strokeWidth="3" />
+							</AreaChart>
 						</div>
 					</div>
 				</section>
