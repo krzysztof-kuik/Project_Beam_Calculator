@@ -10,7 +10,7 @@
 	font-family: $raleway;
 	font-size: 22px;
 	border-radius: 30px;
-	box-shadow: $shadow;
+	box-shadow: $solveButtonShadow;
 	letter-spacing: 5px;
 	font-weight: 700;
 	border: none;
@@ -23,6 +23,7 @@
 		color: rgba(1, 1, 1, 0.075);
 		transition: color 1s ease-in-out,
 			background-color 1s ease-in-out;
+		box-shadow: $shadow;
 
 		&:focus {
 			outline: none;
@@ -49,24 +50,29 @@
 	position: relative;
 	overflow-y: hidden;
 
-
 	.chartsSection {
 		width: 900px;
 		// height: 100vh;
 		background-color: $main;
 		// padding: 30px 0;
 		position: relative;
-		transition: transform 2s ease-in-out;
-		overflow: visible;
+		// transition: transform 2s ease-in-out;
+		transition: max-height 2s ease-in-out;
+		overflow: hidden;
+
 		// overflow-y: hidden;
 
 		&.hidden {
-			transform: translate(0, -100%);
-
+			// transform: translate(0, -100%);
+			max-height: 0;
 		}
 
 		&.visible {
-			transform: translate(0, 0%);
+			// transform: translate(0, 0%);
+			box-shadow: $shadow;
+			padding-bottom: 30px;
+			margin-bottom: 50px;
+			max-height: 1100px;
 		}
 
 
@@ -82,20 +88,46 @@
 			overflow: visible;
 
 
-			// &.hidden {
-			// 	max-height: 0;
-			// 	overflow: hidden;
-			// 	// transition: height 2s ease-in-out;
-			// }
+			.chartContainer__title {
 
-			// &.visible {
-			// 	max-height: 800px;
-			// 	overflow: visible;
-			// }
+				text-align: center;
+				width: 100%;
+				position: relative;
+				font-family: $openSans;
+				font-size: 20px;
+				letter-spacing: 4px;
+				font-weight: 700;
+				color: $second;
+				background-color: $fourth;
+				margin: 40px 0;
+				padding: 10px 0;
+				// border-radius: 20px 20px 0 0;
+
+				.chartContainer__unitX {
+					position: absolute;
+					font-family: $raleway;
+					color: $fourth;
+					right: 10px;
+					bottom: -460px;
+					font-size: 20px;
+				}
+
+
+
+				.chartContainer__unitY {
+					position: absolute;
+					font-family: $raleway;
+					color: $fourth;
+					left: -40px;
+					bottom: -35px;
+					font-size: 20px;
+					letter-spacing: 1px;
+				}
+			}
 
 			.recharts-wrapper {
 				left: -60px;
-				position: absolute;
+
 			}
 		}
 	}

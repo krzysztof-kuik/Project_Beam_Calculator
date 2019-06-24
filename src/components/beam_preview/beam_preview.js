@@ -55,7 +55,10 @@ class BeamPreview extends Component {
               {lengthRenderCondition ? (<strong>{this.props.beamLength} mm</strong>) : ""}
             </div>
             {forces}
-            <div className="beamContainer__beam"></div>
+            <div className="beamContainer__beam">
+              {/* <div className="beamContainer__reactionA"></div>
+              <div className="beamContainer__reactionB"></div> */}
+            </div>
           </div>
         </div>
       </>

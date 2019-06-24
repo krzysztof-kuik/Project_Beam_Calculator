@@ -24,8 +24,8 @@ class Charts extends Component {
 		let { numOfForces, beamLength, force1X, force2X, force1Val, force2Val } = this.props;
 		let { reactionA, reactionB } = this.state;
 		let calcPoints = [0, beamLength];
-		let torqueData = [];
-		let cuttingForceData = [];
+		let momentData = [];
+		let shearForceData = [];
 		let sortCalcPoints = () => {
 			return calcPoints.sort((a, b) => a - b);
 		}
@@ -35,39 +35,39 @@ class Charts extends Component {
 			calcPoints.push(force1X);
 			sortCalcPoints();
 			for (let i = 0; i < 2; i++) {
-				torqueData.push(
+				momentData.push(
 					{
 						x: calcPoints[i],
-						torque: parseFloat((reactionA * calcPoints[i]).toFixed(1))
+						moment: parseFloat((reactionA * calcPoints[i]).toFixed(1))
 					}
 				)
-				cuttingForceData.push(
+				shearForceData.push(
 					{
 						x: calcPoints[i],
-						cutForce: i === 0 ? 0 : reactionA
+						shearForce: i === 0 ? 0 : reactionA
 					},
 					{
 						x: calcPoints[i],
-						cutForce: i === 0 ? reactionA : reactionA - force1Val
+						shearForce: i === 0 ? reactionA : reactionA - force1Val
 					}
 				)
 			}
 			for (let i = 2; i < calcPoints.length; i++) {
-				torqueData.push(
+				momentData.push(
 					{
 						x: calcPoints[i],
-						torque: parseFloat((reactionA * calcPoints[i] - force1Val * (calcPoints[i] - force1X)).toFixed(1))
+						moment: parseFloat((reactionA * calcPoints[i] - force1Val * (calcPoints[i] - force1X)).toFixed(1))
 					}
 				)
 
-				cuttingForceData.push(
+				shearForceData.push(
 					{
 						x: calcPoints[i],
-						cutForce: reactionA - force1Val
+						shearForce: reactionA - force1Val
 					},
 					{
 						x: calcPoints[i],
-						cutForce: 0
+						shearForce: 0
 					}
 				)
 			}
@@ -76,64 +76,64 @@ class Charts extends Component {
 			calcPoints.push(force1X, force2X);
 			sortCalcPoints();
 			for (let i = 0; i < 2; i++) {
-				torqueData.push(
+				momentData.push(
 					{
 						x: calcPoints[i],
-						torque: parseFloat((reactionA * calcPoints[i]).toFixed(1))
+						moment: parseFloat((reactionA * calcPoints[i]).toFixed(1))
 					}
 				)
-				cuttingForceData.push(
+				shearForceData.push(
 					{
 						x: calcPoints[i],
-						cutForce: i === 0 ? 0 : reactionA,
+						shearForce: i === 0 ? 0 : reactionA,
 						a: 1
 					},
 					{
 						x: calcPoints[i],
-						cutForce: i === 0 ? reactionA : reactionA - force1Val,
+						shearForce: i === 0 ? reactionA : reactionA - force1Val,
 						b: 2
 					}
 				)
 			}
 			for (let i = 1; i < 3; i++) {
 
-				torqueData.push(
+				momentData.push(
 					{
 						x: calcPoints[i],
-						torque: parseFloat((reactionA * calcPoints[i] - force1Val * (calcPoints[i] - force1X)).toFixed(1))
+						moment: parseFloat((reactionA * calcPoints[i] - force1Val * (calcPoints[i] - force1X)).toFixed(1))
 					}
 				)
 
 			}
 			for (let i = 2; i < calcPoints.length; i++) {
 
-				cuttingForceData.push(
+				shearForceData.push(
 					{
 						x: calcPoints[i],
-						cutForce: i === calcPoints.length - 1 ? reactionA - force1Val - force2Val : reactionA - force1Val,
+						shearForce: i === calcPoints.length - 1 ? reactionA - force1Val - force2Val : reactionA - force1Val,
 						c: 3
 					},
 					{
 						x: calcPoints[i],
-						cutForce: i === calcPoints.length - 1 ? 0 : reactionA - force1Val - force2Val,
+						shearForce: i === calcPoints.length - 1 ? 0 : reactionA - force1Val - force2Val,
 						d: 4
 					}
 				)
 			}
 			for (let i = 2; i < calcPoints.length; i++) {
 
-				torqueData.push({
+				momentData.push({
 					x: calcPoints[i],
-					torque: parseFloat((reactionA * calcPoints[i] - force1Val * (calcPoints[i] - force1X) - force2Val * (calcPoints[i] - force2X)).toFixed(1))
+					moment: parseFloat((reactionA * calcPoints[i] - force1Val * (calcPoints[i] - force1X) - force2Val * (calcPoints[i] - force2X)).toFixed(1))
 				})
 			}
 
 		}
 
-		console.log(torqueData, cuttingForceData);
+		console.log(momentData, shearForceData);
 		this.setState({
-			torqueData: torqueData,
-			cuttingForceData: cuttingForceData
+			momentData: momentData,
+			shearForceData: shearForceData
 		})
 
 
@@ -189,8 +189,12 @@ class Charts extends Component {
 				<section className="chartsComponent">
 					<div className={chartsSectionClass}>
 						<div className="chartsContainer">
+							<div className="chartContainer__title"> Moment
+								<div className="chartContainer__unitX"> x [mm]</div>
+								<div className="chartContainer__unitY">M [Nmm]</div>
+							</div>
 							<AreaChart
-								width={880} height={400} data={this.state.torqueData}
+								width={878} height={400} data={this.state.momentData}
 								margin={{ top: 10, right: 20, left: 0, bottom: 10 }}
 							>
 								<CartesianGrid strokeDasharray="3 3" />
@@ -205,28 +209,32 @@ class Charts extends Component {
 									dy={10}
 								/>
 								<YAxis
-									dataKey="torque"
+									dataKey="moment"
 									type="number"
 									tickCount={5}
 									scale="linear"
 									domain={['dataMin', 'dataMax']}
 									interval={0}
 									allowDecimals={true}
-									// label="Torque [Nmm]"
+									// label="moment [Nmm]"
 									angle={-45}
 									dx={-5}
 									textAnchor="end"
 									tick={{ fontSize: 18 }}
 								/>
 								<Tooltip />
-								<Legend />
-								<Area type="linear" dataKey="torque" stroke="#8884d8" activeDot={{ r: 8 }} stroke="rgb(121, 121, 121)" strokeWidth="3" fill='rgb(235, 235, 235)' />
+								{/* <Legend /> */}
+								<Area type="linear" dataKey="moment" stroke="#8884d8" activeDot={{ r: 8 }} stroke="rgb(121, 121, 121)" strokeWidth="3" fill='rgb(235, 235, 235)' />
 							</AreaChart>
 
+							<div className="chartContainer__title"> Shear Force
+								<div className="chartContainer__unitX">x [mm]</div>
+								<div className="chartContainer__unitY">F [N]</div>
+							</div>
 
 							<AreaChart
-								width={880} height={400} data={this.state.cuttingForceData}
-								margin={{ top: 10, right: 20, left: 0, bottom: 10 }} 
+								width={878} height={400} data={this.state.shearForceData}
+								margin={{ top: 10, right: 20, left: 0, bottom: 10 }}
 							>
 								<CartesianGrid strokeDasharray="3 3" />
 								<XAxis dataKey="x"
@@ -244,7 +252,7 @@ class Charts extends Component {
 
 								/>
 								<YAxis
-									dataKey="cutForce"
+									dataKey="shearForce"
 									interval={0}
 									type="number"
 									tickCount={5}
@@ -253,7 +261,7 @@ class Charts extends Component {
 
 									// domain={[' 1.1 * dataMin', '1.1 * dataMax']}
 									allowDecimals={true}
-									// label="Torque [Nmm]"	
+									// label="moment [Nmm]"	
 									angle={-45}
 									dx={-5}
 									textAnchor="end"
@@ -261,8 +269,8 @@ class Charts extends Component {
 
 								/>
 								<Tooltip />
-								<Legend />
-								<Area type="linear" dataKey="cutForce" stroke="#8884d8" fill='rgb(235, 235, 235)' activeDot={{ r: 8 }} stroke="rgb(121, 121, 121)" strokeWidth="3" />
+								{/* <Legend /> */}
+								<Area type="linear" dataKey="shearForce" stroke="#8884d8" fill='rgb(235, 235, 235)' activeDot={{ r: 8 }} stroke="rgb(121, 121, 121)" strokeWidth="3" />
 							</AreaChart>
 						</div>
 					</div>
