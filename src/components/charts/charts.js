@@ -130,7 +130,6 @@ class Charts extends Component {
 
 		}
 
-		console.log(momentData, shearForceData);
 		this.setState({
 			momentData: momentData,
 			shearForceData: shearForceData
@@ -142,8 +141,6 @@ class Charts extends Component {
 	clickHandler = () => {
 
 		let { numOfForces, beamLength, force1X, force2X, force1Val, force2Val } = this.props;
-		console.log(beamLength);
-
 		let reactionA = 0;
 		let reactionB = 0;
 
@@ -159,9 +156,6 @@ class Charts extends Component {
 
 		}
 
-		// let signleForceCondtition = beamLength * force1Val * force1X !== 0;
-		// let doubleForceCondtition = beamLength * force1Val * force1X * force2Val * force2X !== 0;
-
 		if ((numOfForces === 1 && this.signleForceCondtition) || (numOfForces > 1 && this.doubleForceCondtition)) {
 			console.log('ok');
 
@@ -175,10 +169,6 @@ class Charts extends Component {
 		}
 	}
 
-
-
-
-
 	render() {
 
 		this.signleForceCondtition = ((this.props.beamLength * this.props.force1Val) === 0) || isNaN(this.props.beamLength * this.props.force1Val) ? false : true;
@@ -187,13 +177,8 @@ class Charts extends Component {
 
 		this.buttonActive = ((this.props.numOfForces === 1 & this.signleForceCondtition) || (this.props.numOfForces === 2 && this.doubleForceCondtition)) ? true : false;
 
-		console.log("forse 1 condition:", this.signleForceCondtition);
-		console.log("forse 1 condition:", this.doubleForceCondtition);
-		console.log("button activ:", this.buttonActive);
-
 		let buttonClass = this.buttonActive ? "solveButton" : "solveButton disabled";
 		let chartsSectionClass = this.state.solved ? "chartsSection visible" : "chartsSection hidden";
-		// console.log(this.props);
 		return (
 			<>
 				<button className={buttonClass} onClick={this.clickHandler}><span>SOLVE</span></button>
